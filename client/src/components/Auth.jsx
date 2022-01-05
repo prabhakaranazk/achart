@@ -4,17 +4,38 @@ import axios from 'axios';
 
 import SigninImage from '../assets/signup.jpg';
 
+const initialState = {
+    fullName: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+    phoneNumber: '',
+    avatarURL: ''
+}
+
 const Auth = () => {
+    const [form, setForm] = useState(initialState);
     const [isSignup, setisSignup] = useState(true);
 
-    const handleChange = () => {};
-    const switchMode = () => {};
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name] : e.target.value });
+    };
+
+    const switchMode = () => {
+        setisSignup((prevIsSignup) => !prevIsSignup)
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(form)
+    }
+
     return (
         <div className='auth__form-container'>
             <div className='auth__form-container_fields'>
                 <div className='auth__form-container_fields-content'>
                     <p>{ isSignup ? 'Sign Up' : 'Sign In' }</p>
-                    <form onSubmit={()=> {}}>
+                    <form onSubmit={handleSubmit}>
                         { isSignup && (
                             <div className='auth__form-container_fields-content_input'>
                                 <label htmlFor='fullName'>Full Name</label>
@@ -40,9 +61,9 @@ const Auth = () => {
                         </div>
                         { isSignup && (
                             <div className='auth__form-container_fields-content_input'>
-                                <label htmlFor='phonenumber'>Phone Number</label>
+                                <label htmlFor='phoneNumber'>Phone Number</label>
                                 <input
-                                    name='phonenumber'
+                                    name='phoneNumber'
                                     placeholder='Phone Number'
                                     type='text'
                                     onChange={handleChange}
@@ -52,10 +73,10 @@ const Auth = () => {
                         )}
                         { isSignup && (
                             <div className='auth__form-container_fields-content_input'>
-                                <label htmlFor='avatarURL'>Avator URL</label>
+                                <label htmlFor='avatarURL'>Avatar URL</label>
                                 <input
                                     name='avatarURL'
-                                    placeholder='Avator URL'
+                                    placeholder='Avatar URL'
                                     type='text'
                                     onChange={handleChange}
                                     required
@@ -74,9 +95,9 @@ const Auth = () => {
                         </div>
                         { isSignup && (
                             <div className='auth__form-container_fields-content_input'>
-                                <label htmlFor='confirm-password'>Confirm Password</label>
+                                <label htmlFor='confirmPassword'>Confirm Password</label>
                                 <input
-                                    name='confirm-password'
+                                    name='confirmPassword'
                                     placeholder='Confirm Password'
                                     type='password'
                                     onChange={handleChange}
@@ -84,6 +105,9 @@ const Auth = () => {
                                 />
                             </div>
                         )}
+                        <div className='auth__form-container_fields-content_button'>
+                            <button>{ isSignup ? 'Sign Up' : 'Sign In' }</button>
+                        </div>
                     </form>
                     <div className='auth__form-container_fields-account'>
                         <p>
